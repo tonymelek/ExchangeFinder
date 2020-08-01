@@ -1,0 +1,156 @@
+
+/*Global*/
+body{
+   width: 80%;
+    height: :100%;
+  margin: 0 auto;
+    padding: 0;
+//    background-color: #011C40;
+//    background-size:80%;
+    
+}
+.wrap{
+  display:flex;
+  justify-content:sapce evenly;
+  height: 100px;
+  background-color: #011C40;
+  color: #F2EA79;
+  
+}
+.wrapper{
+display:flex;
+background-color: #03295D;
+padding-bottom:25px;
+}
+@media screen and (max-width:1090px){
+img{
+display:none;
+}
+    h1{
+        font-size: 18pt;
+    }    
+    body{
+        width: 100%;
+    }
+}
+.Search{
+  height: 100px;
+  text-align: center;
+  background-color: #03295D;
+    padding-top:30px;
+  
+}
+::placeholder {
+  color:wheat;
+  
+}
+.heading{
+flex-grow:1;
+text-align:center;
+padding: 30px 0 ;
+}
+.input-container{
+    display: flex;
+    color:wheat;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: center;
+  background-color: #006DFF;
+  border-radius: 48px;
+  width: 50%;
+  margin: 0 auto;
+    padding-right: 25px;
+
+}
+.table-container{
+flex-grow:1;
+flex-shrink:1;
+  text-align: center;
+  background-color: #03295D;
+  color: wheat;
+  padding-top: 30px;
+  
+  margin: 0 5%;
+}
+
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+  margin: 0 auto;
+    color:wheat;
+}
+#input{
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-left: 20px;
+  background-color: #006DFF;
+  outline: #006DFF;
+  outline-offset: 0;
+  font-size: 16pt;
+  color: wheat;
+  height:90%;
+  width:60%;
+  border:0;
+  padding-left:2px;
+  
+}
+#findings{
+  color: #E80A58;
+  font-weight: 700;
+  margin:15px auto;
+  font-size:16pt;
+  font-family:Calibri;
+}
+img{
+    height:100%;
+}
+
+h1{
+    text-align:center;
+    margin: 0;
+    padding: 60x 0;
+}
+
+.map{
+background-color: #006DFF;
+color:wheat;
+text-decoration:none;
+padding: 3px;
+border-radius:5px;
+
+
+}
+.map:hover{
+color:white;
+background-color: #00aFFF;
+
+}
+td{
+padding:5px;
+font-family:Calibri;
+font-size:12pt;
+}
+p{
+text-align: center;
+font-family:Calibri;
+font-size:11pt;
+color:wheat;
+margin: 0 auto;
+padding:15px;
+
+}
+.more{
+height:50px;
+}
+
+#demo2{
+padding-top:0;
+}
+
+.more p a{
+color:white;
+font-family:Calibri;
+font-size:11pt;
+
+}
+   
