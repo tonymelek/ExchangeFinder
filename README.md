@@ -1,6 +1,10 @@
 # ExchangeFinder
 ## Description
-This Repo is a simple application that uses googlesheet single table as a database, having information about Telstra Exchange Locations in Victoria, inluding their name , 4 alpha code, address and the coordinates (longitude and latitude).
+This Repo is a simple application that uses googlesheet single table as a database, having information about Telstra Exchange Locations in Victoria, inluding 
+* Exchange name 
+* 4 Alpha code 
+* Address 
+* Coordinates (longitude and latitude).
 The application uses gscipt as a backend where the table can be converted to a `JSON` object and imported to the browser on file being loaded.
 
 
