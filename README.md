@@ -6,4 +6,4 @@ The
 
 ## Usage
 
-&copy Tony Melek, All rights reserved
+© Tony Melek, All rights reserved
