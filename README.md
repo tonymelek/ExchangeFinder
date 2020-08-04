@@ -17,6 +17,9 @@ Use the search bar to type an Exchange name or part of it to start search and wi
 ## Testing
 You may try the app simply by following the link [Exchange Finder](https://tonymelek.github.io/ExchangeFinder/)
 
+## Feedback
+Please, send me any comments, questions, suggestions on my e-mail [tonymelek.au@gmail.com](mailto:tonymelek.au@gmail.com)
+
 
 ## License
 © Tony Melek, All rights reserved
