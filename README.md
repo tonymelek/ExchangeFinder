@@ -12,7 +12,11 @@ The application uses gscipt as a backend where the table can be converted to a `
 ## Usage
 Use the search bar to type an Exchange name or part of it to start search and with every key stroke the webpage updates itself with number of results found and displays them in a table below it.
 
-**Note:** The earch text is not case sensetive.
+**Note:** The search text is not case sensetive.
+
+## Testing
+You may try the app simply by following the link [Exchange Finder](https://tonymelek.github.io/ExchangeFinder/)
 
 
+## License
 © Tony Melek, All rights reserved
