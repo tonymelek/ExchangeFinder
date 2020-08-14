@@ -1,26 +1,45 @@
-var x=[];
-            
-$.getJSON('https://script.google.com/macros/s/AKfycbzfPbiLLpGN5gOEHLprf7w2EY31Lgfg4E_ChmAx6c7ET3MXo-fP/exec?callback=?',function(ttt){
+// inititalize empty array as global variable to carry the JSON object 
+var json = [];
 
-x=ttt;
+// Call backend from google script deployed web app
+$.getJSON('https://script.google.com/macros/s/AKfycbzfPbiLLpGN5gOEHLprf7w2EY31Lgfg4E_ChmAx6c7ET3MXo-fP/exec?callback=?', function (imported_table) {
+
+    json = imported_table;
 });
-$("#input").keyup(function(){
+$("#input").keyup(function () { //re-run the function for each key stroke
 
-    let ttt=x;
-    let k=[];
-    let m=0;
-    for (let i in ttt){
-//                    alert($("#input").val());
-    if(ttt[i][1].includes($("#input").val().toUpperCase())){
-      k[m]=[ttt[i][0],ttt[i][1],ttt[i][2],ttt[i][4],ttt[i][5]] ;
-        m=m+1;
-    }}
-    // console.log(k);
-    var y="";
-    for(let i in k){
-    y=y+'<tr><td>'+k[i][0]+'</td><td class="exchange">'+k[i][1]+'</td><td>'+k[i][2]+'</td><td><a class="map" href=https://maps.google.com/?q='+k[i][3]+','+k[i][4]+' target="_blank" >Navigate</a></td></tr>';}
-    output= '<table ><tbody>'+y+'</tbody></table>';
+    let imported_table = json;
+    let results = [];
+    let results_count = 0;
+    for (let i in imported_table) {
+        // The imported imported_table is a two dimensionl array with the following structure
+        // First column ==> 4 Alpha code for the Exchange
+        // Second Column ==> Exchange Name
+        // Third Column ==> Exchange Address
+        // Fourth and Fifth==> The long and lat (coordinates)
 
+
+
+        if (imported_table[i][1].includes($("#input").val().toUpperCase())) { //check input from user after converting to upper case (to make the search NOT case sensetive)to build the table to be displayed
+            results[results_count] = [imported_table[i][0], imported_table[i][1], imported_table[i][2], imported_table[i][4], imported_table[i][5]];
+            results_count = results_count + 1;
+        }
+    }
+
+    var display_table = "";
+    const screen_size = window.innerWidth;
+    for (let i in results) {
+        if (screen_size > 450) {
+            display_table = display_table + '<tr><td>' + results[i][0] + '</td><td class="exchange">' + results[i][1] + '</td><td>' + results[i][2] + '</td><td><a class="map" href=https://maps.google.com/?q=' + results[i][3] + ',' + results[i][4] + ' target="_blank" >Navigate</a></td></tr>';
+        }
+        else {
+            display_table = display_table + '<tr><td>' + results[i][0] + '</td><td class="exchange">' + results[i][1] + '</td><td><a class="map" href=https://maps.google.com/?q=' + results[i][3] + ',' + results[i][4] + ' target="_blank" >Navigate</a></td></tr>';
+        }
+
+    }
+    output = '<table ><tbody>' + display_table + '</tbody></table>';
+    // add html content to table elemnt
     $(".table-container").html(output);
-    $("#findings").text("We have found "+(k.length)+" matching records");
+    // Display Number of records found matching user search text
+    $("#findings").text("We have found " + (results.length) + " matching records");
 })
