@@ -5,13 +5,14 @@ body{
 
    margin: 0 auto;
    padding: 0;
-   background-color: #011C40;  
+   background-color:#03295D; 
 }
 /* Small Screen Images Header */
 .wrap1{
   display:none;
   justify-content:space-between;
   align-items: center;
+  background-color: #011C40;
 }
 .wrap1 img{
   margin: 10px 10px;
@@ -31,7 +32,6 @@ body{
 display:flex;
 background-color: #03295D;
 padding-bottom:25px;
-height: 60vh;
 }
 
 .Search{
@@ -157,18 +157,20 @@ font-family:Calibri;
 font-size:11pt;
 }
 /* Media Queries */
-@media screen and (max-width:1090px){
+@media screen and (max-width:768px){
   .wrap img{
   display:none;
   }
       h1{
           font-size: 18pt;
       }    
-  
       .wrap1{
         display: flex;
       }
       .wrap1 img{
         height: 10vh;
+      }
+      .input-container{
+      width:80%;
       }
   }
