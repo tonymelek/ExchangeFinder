@@ -79,6 +79,9 @@ table, th, td {
   margin: 0 auto;
     color:wheat;
 }
+table{
+  margin-bottom:2.5rem;
+}
 #input{
     flex-grow: 1;
     flex-shrink: 1;
