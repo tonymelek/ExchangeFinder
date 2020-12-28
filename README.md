@@ -15,6 +15,7 @@ The idea and motive behind making this application was that when I was working a
 Use the search bar to type an Exchange name or part of it to start search and with every key stroke the webpage updates itself with number of results found and displays them in a table below it.
 
 **Note:** The search text is not case sensetive.
+![screenshot](screenshot.JPG)
 
 ## Testing
 You may try the app simply by following the link [Exchange Finder](https://tonymelek.github.io/ExchangeFinder/)
