@@ -1,45 +1,48 @@
 // inititalize empty array as global variable to carry the JSON object 
-var json = [];
+let json = [];
+$("#findings").text('Loading Results...')
+const drawTable = (imported_table) => {
+    const results = imported_table.filter(record => record[1].includes($("#input").val().trim().toUpperCase()))
+    const results_count = results.length
 
-// Call backend from google script deployed web app
-$.getJSON('https://script.google.com/macros/s/AKfycbzfPbiLLpGN5gOEHLprf7w2EY31Lgfg4E_ChmAx6c7ET3MXo-fP/exec?callback=?', function (imported_table) {
-
-    json = imported_table;
-});
-$("#input").keyup(function () { //re-run the function for each key stroke
-
-    let imported_table = json;
-    let results = [];
-    let results_count = 0;
-    for (let i in imported_table) {
-        // The imported imported_table is a two dimensionl array with the following structure
-        // First column ==> 4 Alpha code for the Exchange
-        // Second Column ==> Exchange Name
-        // Third Column ==> Exchange Address
-        // Fourth and Fifth==> The long and lat (coordinates)
-
-
-
-        if (imported_table[i][1].includes($("#input").val().toUpperCase())) { //check input from user after converting to upper case (to make the search NOT case sensetive)to build the table to be displayed
-            results[results_count] = [imported_table[i][0], imported_table[i][1], imported_table[i][2], imported_table[i][4], imported_table[i][5]];
-            results_count = results_count + 1;
-        }
-    }
-
-    var display_table = "";
+    var tbody = $('<tbody>');
     const screen_size = window.innerWidth;
-    for (let i in results) {
-        if (screen_size > 450) {
-            display_table = display_table + '<tr><td>' + results[i][0] + '</td><td class="exchange">' + results[i][1] + '</td><td>' + results[i][2] + '</td><td><a class="map" href=https://maps.google.com/?q=' + results[i][3] + ',' + results[i][4] + ' target="_blank" >Navigate</a></td></tr>';
-        }
-        else {
-            display_table = display_table + '<tr><td>' + results[i][0] + '</td><td class="exchange">' + results[i][1] + '</td><td><a class="map" href=https://maps.google.com/?q=' + results[i][3] + ',' + results[i][4] + ' target="_blank" >Navigate</a></td></tr>';
-        }
 
-    }
-    output = '<table ><tbody>' + display_table + '</tbody></table>';
-    // add html content to table elemnt
-    $(".table-container").html(output);
+    results.forEach(result => {
+        const tr = $('<tr>');
+        const alphas = $(`<td>${result[0]}</td>`);
+        const name = $(`<td class="exchange">${result[1]}</td>`);
+        const address = $(`<td class="exchange">${result[2]}</td>`);
+        const navLink = $(`<td><a class="map" href=https://maps.google.com/?q=${result[4]},${result[5]} target="_blank" >Navigate</a></td>`)
+        if (screen_size > 450) {
+            tr.append(alphas, name, address, navLink);
+        } else {
+            tr.append(alphas, name, navLink);
+        }
+        tbody.append(tr)
+    })
+
+
+    const table = $('<table>')
+    table.append(tbody)
+    // add table to table container
+    $(".table-container").append(table)
     // Display Number of records found matching user search text
-    $("#findings").text("We have found " + (results.length) + " matching records");
+    $("#findings").text(`We have found ${results_count} matching records`);
+}
+// Call backend from google script deployed web app
+$.getJSON('https://script.google.com/macros/s/AKfycbzfPbiLLpGN5gOEHLprf7w2EY31Lgfg4E_ChmAx6c7ET3MXo-fP/exec?callback=?', imported_table => {
+    json = imported_table;
+    drawTable(imported_table)
+
+});
+$("#input").keyup(() => { //re-run the function for each key stroke
+    $(".table-container").empty();
+    if ($('#input').val().trim().length < 3) {
+        $("#findings").text(`Type 3 characters at least to see results`);
+        return
+    }
+    const imported_table = json;
+    drawTable(imported_table)
+
 })
