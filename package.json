@@ -1,0 +1,27 @@
+{
+  "name": "exchangefinder",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Telstra exchange address lookup for Victoria — Google Sheets + Apps Script backend.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonymelek/ExchangeFinder.git"
+  },
+  "author": "Tony Melek",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/tonymelek/ExchangeFinder/issues"
+  },
+  "homepage": "https://tonymelek.github.io/ExchangeFinder/",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "tailwindcss": "^4.1.11",
+    "vite": "^7.0.6"
+  }
+}

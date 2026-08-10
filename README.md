@@ -1,30 +1,45 @@
 # ExchangeFinder
-## Description
-This Repo is a simple application that uses googlesheet single table as a database, having information about Telstra Exchange Locations in Victoria, inluding 
-* Exchange name 
-* 4 Alpha code 
-* Address 
-* Coordinates (longitude and latitude).
 
-The application uses gscipt as a backend where the table can be converted to a `JSON` object and imported to the browser on file being loaded.
+Look up **Telstra exchange** locations across Victoria (name, 4-alpha code, address, coordinates) and open them in Google Maps.
 
-The idea and motive behind making this application was that when I was working as aTelecom subcontractor, I needed to go allover Victoria visiting many exchanges and in the begining all what I had for the exchanges data was a Word document with a table, I converted it to Excel to be a bit more useful, however it was still painful to find where the excel file is living on your mobile phone and start searching and then copying the address to paste it into the Maps app or the car GPS which was really **painful**. Later I learnt how to use gscript and here I came to the idea why don't I make something useful withat Excel spreadsheet and here it came into life and made ife much easier, without using any paid hosting or a real database (My SQL or so..), just utilising googlesheets, gscript fro backend
-
+Exchange data is bundled as static JSON (`public/exchanges.json`) — no external API required.
 
 ## Usage
-Use the search bar to type an Exchange name or part of it to start search and with every key stroke the webpage updates itself with number of results found and displays them in a table below it.
 
-**Note:** The search text is not case sensetive.
+Type an exchange name (at least 3 characters). Results update as you type. Search is case-insensitive.
 
+Live site: [Exchange Finder](https://tonymelek.github.io/ExchangeFinder/)
 
-![screenshot](screenshot.JPG)
+## Develop
 
-## Testing
-You may try the app simply by following the link [Exchange Finder](https://tonymelek.github.io/ExchangeFinder/)
+```bash
+npm install
+npm run dev
+```
+
+Open the local URL Vite prints (with base path `/ExchangeFinder/`).
+
+## Build & deploy (GitHub Pages)
+
+Pushing to `master` runs [GitHub Actions](.github/workflows/deploy.yml), which builds the site and publishes `dist/` to Pages.
+
+One-time repo setup: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
+
+Locally:
+
+```bash
+npm run build
+npm run preview
+```
+
+The Vite `base` is `/ExchangeFinder/` for `https://tonymelek.github.io/ExchangeFinder/`.
 
 ## Feedback
-Please, send me any comments, questions, suggestions on my e-mail [tonymelek.au@gmail.com](mailto:tonymelek.au@gmail.com)
 
+Comments and suggestions: [info@meltek.com.au](mailto:info@meltek.com.au)
+
+Built by [Meltek](https://meltek.com.au) · [Buy me a coffee](https://buymeacoffee.com/tonnabilv)
 
 ## License
-© Tony Melek, All rights reserved
+
+GPL-3.0 — see [LICENSE](./LICENSE). © Meltek

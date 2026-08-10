@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #0a1628;
+  --color-slate: #1a2b42;
+  --color-mist: #e8f0f8;
+  --color-cloud: #f5f8fc;
+  --color-signal: #0078e8;
+  --color-signal-deep: #005bb5;
+  --color-pulse: #f0e14a;
+  --color-coral: #e11d48;
+  --color-line: #c5d4e6;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply m-0 min-h-screen font-body text-ink;
+  }
+}
+
+@layer utilities {
+  .bg-atlas {
+    background-color: var(--color-cloud);
+    background-image:
+      radial-gradient(ellipse 90% 60% at 10% -10%, rgba(0, 120, 232, 0.18), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 95% 5%, rgba(240, 225, 74, 0.22), transparent 50%),
+      radial-gradient(ellipse 80% 40% at 50% 100%, rgba(0, 91, 181, 0.1), transparent 55%),
+      linear-gradient(180deg, #f5f8fc 0%, #e8f0f8 100%);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(26, 43, 66, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26, 43, 66, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .animate-rise {
+    animation: rise 0.55s ease-out both;
+  }
+
+  .animate-rise-late {
+    animation: rise 0.65s ease-out 0.12s both;
+  }
+
+  .animate-row {
+    animation: row-in 0.35s ease-out both;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
