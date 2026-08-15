@@ -8,7 +8,24 @@ const findingsEl = document.getElementById('findings')
 const inputEl = document.getElementById('input')
 const tableContainer = document.getElementById('table-container')
 
-function setFindings(message) {
+function setFindings(message, tone = 'muted') {
+  const tones = {
+    muted: 'text-slate/60',
+    ok: 'text-ok',
+    warn: 'text-coral',
+    loading: 'text-signal',
+  }
+
+  findingsEl.className = `mt-5 flex min-h-7 items-center justify-center gap-2 text-center text-sm font-medium tracking-wide ${tones[tone] ?? tones.muted}`
+
+  if (tone === 'loading') {
+    findingsEl.innerHTML = `
+      <span class="animate-pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true"></span>
+      <span>${message}</span>
+    `
+    return
+  }
+
   findingsEl.textContent = message
 }
 
@@ -34,17 +51,18 @@ function drawTable(source) {
   clearResults()
 
   if (results.length === 0) {
-    setFindings('No matching records found')
+    setFindings(`No matches for “${inputEl.value.trim()}” — try a shorter name`, 'warn')
     return
   }
 
   setFindings(
-    `We have found ${results.length} matching record${results.length === 1 ? '' : 's'}`
+    `${results.length} matching exchange${results.length === 1 ? '' : 's'}`,
+    'ok'
   )
 
   const table = document.createElement('table')
   table.className =
-    'w-full border-separate border-spacing-0 overflow-hidden rounded-2xl border border-line/80 bg-white/75 text-left text-sm shadow-[0_12px_40px_-20px_rgba(10,22,40,0.3)] backdrop-blur-sm sm:text-base'
+    'result-panel w-full border-separate border-spacing-0 overflow-hidden rounded-2xl border border-line/80 bg-white/85 text-left text-sm backdrop-blur-sm sm:text-base'
 
   const thead = document.createElement('thead')
   const headRow = document.createElement('tr')
@@ -59,7 +77,7 @@ function drawTable(source) {
     th.scope = 'col'
     th.textContent = label
     th.className =
-      'px-3 py-3 font-display text-xs font-semibold uppercase tracking-wider first:pl-4 last:pr-4 sm:px-4'
+      'px-3 py-3.5 font-display text-[11px] font-semibold uppercase tracking-[0.14em] first:pl-4 last:pr-4 sm:px-4'
     headRow.appendChild(th)
   })
   thead.appendChild(headRow)
@@ -70,36 +88,39 @@ function drawTable(source) {
   results.forEach((result, index) => {
     const tr = document.createElement('tr')
     tr.className =
-      'animate-row border-t border-line/70 transition hover:bg-signal/5'
-    tr.style.animationDelay = `${Math.min(index, 12) * 30}ms`
+      'animate-row border-t border-line/60 transition hover:bg-signal/[0.04]'
+    tr.style.animationDelay = `${Math.min(index, 12) * 28}ms`
 
     const code = document.createElement('td')
-    code.className =
-      'whitespace-nowrap px-3 py-3 font-display text-xs font-semibold tracking-wide text-signal first:pl-4 sm:px-4 sm:text-sm'
-    code.textContent = result.code
+    code.className = 'whitespace-nowrap px-3 py-3.5 first:pl-4 sm:px-4'
+    const codeBadge = document.createElement('span')
+    codeBadge.className =
+      'inline-flex rounded-md bg-mist px-2 py-1 font-display text-[11px] font-bold tracking-wide text-signal sm:text-xs'
+    codeBadge.textContent = result.code
+    code.appendChild(codeBadge)
 
     const name = document.createElement('td')
-    name.className = 'px-3 py-3 font-semibold text-ink sm:px-4'
+    name.className = 'px-3 py-3.5 font-semibold text-ink sm:px-4'
     name.textContent = result.name
 
     const cells = [code, name]
 
     if (showAddress) {
       const address = document.createElement('td')
-      address.className = 'px-3 py-3 text-slate/80 sm:px-4'
+      address.className = 'px-3 py-3.5 text-slate/75 sm:px-4'
       address.textContent = result.address
       cells.push(address)
     }
 
     const navCell = document.createElement('td')
-    navCell.className = 'px-3 py-3 text-right last:pr-4 sm:px-4'
+    navCell.className = 'px-3 py-3.5 text-right last:pr-4 sm:px-4'
 
     const navLink = document.createElement('a')
     navLink.href = `https://maps.google.com/?q=${result.lat},${result.lng}`
     navLink.target = '_blank'
     navLink.rel = 'noopener noreferrer'
     navLink.className =
-      'inline-flex items-center gap-1.5 rounded-lg bg-signal px-3 py-1.5 font-display text-xs font-semibold text-white transition hover:bg-signal-deep hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal'
+      'inline-flex items-center gap-1.5 rounded-lg bg-amber px-3 py-2 font-display text-xs font-bold text-ink transition hover:bg-amber-deep hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber'
     navLink.innerHTML = `
       <span>Navigate</span>
       <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -125,8 +146,9 @@ function handleSearch() {
   if (inputEl.value.trim().length < 3) {
     setFindings(
       records.length
-        ? `${records.length} exchanges loaded — type 3+ characters to search`
-        : 'Type 3 characters at least to see results'
+        ? `${records.length} exchanges ready — type at least 3 characters`
+        : 'Type at least 3 characters to search',
+      'muted'
     )
     return
   }
@@ -134,7 +156,7 @@ function handleSearch() {
   drawTable(records)
 }
 
-setFindings('Loading results…')
+setFindings('Loading exchange data…', 'loading')
 
 fetch(DATA_URL)
   .then((response) => {
@@ -144,11 +166,12 @@ fetch(DATA_URL)
   .then((data) => {
     records = data.map(normalizeRecord)
     setFindings(
-      `${records.length} exchanges loaded — type 3+ characters to search`
+      `${records.length} exchanges ready — type at least 3 characters`,
+      'muted'
     )
   })
   .catch(() => {
-    setFindings('Unable to load exchange data. Please try again later.')
+    setFindings('Unable to load exchange data. Please try again later.', 'warn')
   })
 
 inputEl.addEventListener('input', handleSearch)
